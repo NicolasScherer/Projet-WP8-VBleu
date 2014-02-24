@@ -8,12 +8,15 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using VéloBleu.Resources;
+using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace VéloBleu
 {
     public partial class MainPage : PhoneApplicationPage
     {
         // Constructeur
+        List<Station_Item> stations;
         public MainPage()
         {
             InitializeComponent();
@@ -23,24 +26,51 @@ namespace VéloBleu
 
             ProgBar.Opacity = 100;
             txtProgBar.Text = "récupération des données...";
-          //  WebClient client = new WebClient();
-          //  client.DownloadStringCompleted += client_DownloadStringCompleted;
-          //  client.DownloadStringAsync(new Uri("http://www.velo-vision.com/nice/oybike/stands.nsf/getsite?site=nice&format=xml&key=veolia"));
+            WebClient client = new WebClient();
+            client.DownloadStringCompleted += client_DownloadStringCompleted;
+            client.DownloadStringAsync(new Uri("http://www.velo-vision.com/nice/oybike/stands.nsf/getsite?site=nice&format=xml&key=veolia"));
 
         }
         private void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            if (e.Error == null)
-            {
-               // string texte = e.Result;
-               // MessageBox.Show(texte);
-                ProgBar.Visibility = Visibility.Visible;
-            }
-            else
-                {
-                MessageBox.Show("Impossible de récupérer les données sur internet :" + e.Error);
+            if (e.Error == null){
+                string responseXml = e.Result;
+                txtProgBar.Text = "traitement des données...";
+                try{
+                    parseVelo(responseXml);
+                }catch (Exception exception){
+                    ProgBar.Opacity = 0;
+                    txtProgBar.Text = "Erreur de lecture des données. Précision sur l'exception : "+ exception.HelpLink;
+                    //throw;
                 }
-}
+                
+            }else{
+                //MessageBox.Show("Impossible de récupérer les données sur internet :" + e.Error);
+                ProgBar.Opacity = 0;
+                txtProgBar.Text = "Impossible de récupérer les données sur internet.";
+            }
+        }
+
+        private void parseVelo(string responseXml)
+        {
+            XDocument doc = XDocument.Parse(responseXml);
+            stations = (from query in doc.Descendants("stand")
+                     select new Station_Item
+                     {
+                         Name = (string) query.Attribute("name"),
+                         Id = (string) query.Attribute("id"),
+                         Wcom = (string) query.Element("wcom"),
+                         Disp = (string) query.Element("disp"),
+                         Lng = (string) query.Element("lng"),
+                         Lat = (string) query.Element("lat"),
+                         Tc = (string) query.Element("tc"),
+                         Ac = (string) query.Element("ac"),
+                         Ap = (string) query.Element("ap"),
+                         Ab = (string) query.Element("ab")
+                     }).ToList();
+
+            Debug.WriteLine("The product name is " +stations);
+        }
 
         // Exemple de code pour la conception d'une ApplicationBar localisée
         //private void BuildLocalizedApplicationBar()
