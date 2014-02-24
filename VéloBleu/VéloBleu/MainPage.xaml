@@ -47,8 +47,9 @@
         	<StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
         		<Image Height="100" Source="velo_bleu_big.png"/>
         		<Image Height="100" Source="logo.png" Margin="0,70,0,0"/>
-        		<ProgressBar Height="13" BorderThickness="0" Margin="0,100,0,0" IsIndeterminate="True" Background="#19FFFFFF" Foreground="#FF02FFFF"/>
-        	</StackPanel>
+        		<ProgressBar x:Name="ProgBar" Height="13" BorderThickness="0" Margin="0,100,0,0" IsIndeterminate="True" Background="#19FFFFFF" Foreground="#FF02FFFF" Opacity="0"/>
+                <TextBlock x:Name="txtProgBar" TextWrapping="Wrap" TextAlignment="Center" FontSize="16"/>
+            </StackPanel>
         
 
         </Grid>

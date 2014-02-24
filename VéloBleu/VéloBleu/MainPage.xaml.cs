@@ -20,7 +20,27 @@ namespace VéloBleu
 
             // Exemple de code pour la localisation d'ApplicationBar
             //BuildLocalizedApplicationBar();
+
+            ProgBar.Opacity = 100;
+            txtProgBar.Text = "récupération des données...";
+          //  WebClient client = new WebClient();
+          //  client.DownloadStringCompleted += client_DownloadStringCompleted;
+          //  client.DownloadStringAsync(new Uri("http://www.velo-vision.com/nice/oybike/stands.nsf/getsite?site=nice&format=xml&key=veolia"));
+
         }
+        private void client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+               // string texte = e.Result;
+               // MessageBox.Show(texte);
+                ProgBar.Visibility = Visibility.Visible;
+            }
+            else
+                {
+                MessageBox.Show("Impossible de récupérer les données sur internet :" + e.Error);
+                }
+}
 
         // Exemple de code pour la conception d'une ApplicationBar localisée
         //private void BuildLocalizedApplicationBar()
