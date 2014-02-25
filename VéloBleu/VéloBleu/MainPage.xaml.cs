@@ -43,9 +43,12 @@ namespace VéloBleu
                     txtProgBar.Text = "Erreur de lecture des données. Précision sur l'exception : "+ exception.HelpLink;
                     //throw;
                 }
-                
+                txtProgBar.Text = "affichage des données...";
+                //dictionnaire d'état de l'application
+                PhoneApplicationService.Current.State["stations"] = stations;
+                //changement de page
+                NavigationService.Navigate(new Uri("/listStation.xaml", UriKind.Relative));
             }else{
-                //MessageBox.Show("Impossible de récupérer les données sur internet :" + e.Error);
                 ProgBar.Opacity = 0;
                 txtProgBar.Text = "Impossible de récupérer les données sur internet.";
             }
@@ -55,22 +58,21 @@ namespace VéloBleu
         {
             XDocument doc = XDocument.Parse(responseXml);
             stations = (from query in doc.Descendants("stand")
-                     select new Station_Item
-                     {
-                         Name = (string) query.Attribute("name"),
-                         Id = (string) query.Attribute("id"),
-                         Wcom = (string) query.Element("wcom"),
-                         Disp = (string) query.Element("disp"),
-                         Lng = (string) query.Element("lng"),
-                         Lat = (string) query.Element("lat"),
-                         Tc = (string) query.Element("tc"),
-                         Ac = (string) query.Element("ac"),
-                         Ap = (string) query.Element("ap"),
-                         Ab = (string) query.Element("ab")
-                     }).ToList();
-
-            Debug.WriteLine("The product name is " +stations);
+                        select new Station_Item
+                        {
+                            Name = HttpUtility.UrlDecode( (string)query.Attribute("name") ),
+                            Id = (string)query.Attribute("id"),
+                            Wcom = HttpUtility.UrlDecode( (string)query.Element("wcom") ),
+                            Disp = (string)query.Element("disp"),
+                            Lng = (string)query.Element("lng"),
+                            Lat = (string)query.Element("lat"),
+                            Tc = (string)query.Element("tc"),
+                            Ac = (string)query.Element("ac"),
+                            Ap = (string)query.Element("ap"),
+                            Ab = (string)query.Element("ab")
+                        }).ToList();
         }
+
 
         // Exemple de code pour la conception d'une ApplicationBar localisée
         //private void BuildLocalizedApplicationBar()

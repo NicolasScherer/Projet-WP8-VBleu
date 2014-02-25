@@ -37,13 +37,13 @@ namespace VéloBleu
         public string Ab
         {
             get { return ab; }
-            set { ab = value; }
+            set { ab = value+" vélos"; }
         }
 
         public string Ap
         {
             get { return ap; }
-            set { ap = value; }
+            set { ap = value+" places"; }
         }
 
         public string Ac
