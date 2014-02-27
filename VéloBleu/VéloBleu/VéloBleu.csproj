@@ -107,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="StationComparator.cs" />
     <Compile Include="Station_Item.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,22 +24,27 @@
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <Image Source="velo_bleu.png" Stretch="None"/>
             <TextBlock Text="Liste des Stations" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48" TextAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" Height="72" Margin="10,0" HorizontalAlignment="Center">
+            	<RadioButton Content="Vélos" Click="triVelo_Click"/>
+            	<RadioButton Content="Places" FontFamily="Portable User Interface" Click="triPlace_Click"/>
+            	<RadioButton Content="Distances" Click="triDistance_Click"/>
+            </StackPanel>
         </StackPanel>
 
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Margin="12,211,12,0" Grid.RowSpan="2">
 
             <ListBox Width="Auto" Height="Auto" x:Name="listBox" FontFamily="Portable User Interface" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>  
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Width="400">
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" FontFamily="Portable User Interface" FontSize="22" />
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Wcom}" FontSize="18" />
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <StackPanel Width="350">
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Name}" FontFamily="Portable User Interface" FontSize="25" />
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Wcom}" FontSize="21" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Ab}" FontSize="14" FontFamily="Portable User Interface"/>
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Ap}" FontSize="14"/>
+                                <TextBlock Foreground="{Binding ColorVelo}" TextWrapping="Wrap" Text="{Binding Ab}" FontSize="20" FontFamily="Portable User Interface"/>
+                                <TextBlock Foreground="{Binding ColorPlace}" TextWrapping="Wrap" Text="{Binding Ap}" FontSize="20"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

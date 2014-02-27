@@ -9,6 +9,19 @@ namespace VéloBleu
     class Station_Item
     {
         string id, disp, tc, ac, ap, ab, name, wcom, lng, lat = "";
+        string colorVelo, colorPlace = "";
+
+        public string ColorPlace
+        {
+            get { return colorPlace; }
+            set { colorPlace = value; }
+        }
+
+        public string ColorVelo
+        {
+            get { return colorVelo; }
+            set { colorVelo = value; }
+        }
 
         public string Lat
         {
@@ -37,13 +50,13 @@ namespace VéloBleu
         public string Ab
         {
             get { return ab; }
-            set { ab = value+" vélos"; }
+            set { ab = value; }
         }
 
         public string Ap
         {
             get { return ap; }
-            set { ap = value+" places"; }
+            set { ap = value; }
         }
 
         public string Ac
