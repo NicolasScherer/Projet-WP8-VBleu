@@ -43,7 +43,7 @@
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Wcom}" FontSize="21" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{Binding ColorVelo}" TextWrapping="Wrap" Text="{Binding Ab}" FontSize="20" FontFamily="Portable User Interface"/>
+                                <TextBlock Foreground="{Binding ColorVelo}" TextWrapping="Wrap" Text="{Binding Ab}" FontSize="20"/>
                                 <TextBlock Foreground="{Binding ColorPlace}" TextWrapping="Wrap" Text="{Binding Ap}" FontSize="20"/>
                             </StackPanel>
                         </StackPanel>

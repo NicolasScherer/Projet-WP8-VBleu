@@ -23,16 +23,20 @@ namespace VéloBleu
             //tri vélo
             if (this.type == CompareType.VELO)
             {
-                int a = Convert.ToInt32(station2.Ab);
-                int b = Convert.ToInt32(station1.Ab);
+                string numA = station2.Ab.Substring(0, 2);
+                int a = Convert.ToInt32(numA);
+                string numB = station1.Ab.Substring(0, 2);
+                int b = Convert.ToInt32(numB);
                 if (a != b)
                     return (a < b ? -1 : 1);
             }
             //tri place
             if (this.type == CompareType.PLACE)
             {
-                int a = Convert.ToInt32(station2.Ap);
-                int b = Convert.ToInt32(station1.Ap);
+                string numA = station2.Ap.Substring(0, 2);
+                int a = Convert.ToInt32(numA);
+                string numB = station1.Ap.Substring(0, 2);
+                int b = Convert.ToInt32(numB);
                 if (a != b)
                     return (a < b ? -1 : 1);
 

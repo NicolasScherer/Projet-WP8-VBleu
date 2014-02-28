@@ -30,56 +30,76 @@ namespace VéloBleu
                     if (placesDispo > 3)
                     {
                         query.ColorPlace = "Green";
-                        query.Ap += " places";
                     }
                     else if (placesDispo > 0 && placesDispo <= 3)
                     {
                         query.ColorPlace = "Orange";
-                        query.Ap += " places";
                     }
                     else if (placesDispo == 0)
                     {
                         query.ColorPlace = "Red";
-                        query.Ap += " place";
                     }
+                    //pluriel
+                    if (placesDispo > 1)
+                        query.Ap += " places";
+                    else if (placesDispo <= 1)
+                        query.Ap += " place";
                     //code couleur vélos
                     if (velosDispo > 3)
                     {
                         query.ColorVelo = "Green";
-                       // query.Ab += " vélos";
                     }
                     else if (velosDispo > 0 && velosDispo <= 3)
                     {
                         query.ColorVelo = "Orange";
-                       // query.Ab += " vélos";
                     }
                     else if (velosDispo == 0)
                     {
                         query.ColorVelo = "Red";
-                       // query.Ab += " vélo";
                     }
+                    //pluriel
+                    if (velosDispo > 1)
+                        query.Ab += " vélos";
+                    else if (velosDispo <= 1)
+                        query.Ab += " vélo";
+
                     stationsDispo.Add(query);
                 }
                 listBox.ItemsSource = stationsDispo;
+                
             }
         }
 
         private void triVelo_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            // tri de la liste en fonction des places
+            // tri de la liste en fonction des vélos
             stationsDispo.Sort(new StationComparator(StationComparator.CompareType.VELO));
             // maj listebox
+            listBox.ItemsSource = null;
             listBox.ItemsSource = stationsDispo;
+            //il aurait été préférable d'utiliser un ObservableCollection et d'implémenter INotifyPropertyChanged
+
         }
 
         private void triPlace_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	// TODO : ajoutez ici l'implémentation du gestionnaire d'événements.
+            // tri de la liste en fonction des places
+            stationsDispo.Sort(new StationComparator(StationComparator.CompareType.PLACE));
+            // maj listebox
+            listBox.ItemsSource = null;
+            listBox.ItemsSource = stationsDispo;
+            //il aurait été préférable d'utiliser un ObservableCollection et d'implémenter INotifyPropertyChanged
         }
 
         private void triDistance_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	// TODO : ajoutez ici l'implémentation du gestionnaire d'événements.
+            // tri de la liste en fonction des distances
+            stationsDispo.Sort(new StationComparator(StationComparator.CompareType.DISTANCE));
+            // maj listebox
+            listBox.ItemsSource = null;
+            listBox.ItemsSource = stationsDispo;
+            //il aurait été préférable d'utiliser un ObservableCollection et d'implémenter INotifyPropertyChanged
         }
+
     }
 }
