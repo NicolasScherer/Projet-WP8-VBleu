@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Windows.Devices.Geolocation;
+using System.Device.Location;
 
 namespace VéloBleu
 {
@@ -14,11 +16,41 @@ namespace VéloBleu
     {
         List<Station_Item> stations;
         List<Station_Item> stationsDispo;
+        private Geolocator geolocator = null;
+
+
+        public async void getLocation()
+        {
+            geolocator = new Geolocator();
+            geolocator.DesiredAccuracyInMeters = 25;
+            try
+            {
+                Geoposition geoposition = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(10));
+                GeoCoordinate pos = new GeoCoordinate(Convert.ToDouble(geoposition.Coordinate.Latitude), Convert.ToDouble(geoposition.Coordinate.Longitude));
+                foreach (var query in stations)
+                {
+                    GeoCoordinate posStation = new GeoCoordinate(Convert.ToDouble(query.Lat), Convert.ToDouble(query.Lng));
+                    double distanceInMeter;
+                    distanceInMeter = pos.GetDistanceTo(posStation);
+                    query.DistanceInMeter = distanceInMeter;                 
+                }
+                
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Le service de location est désactivé dans les paramètres du téléphone.");
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
         public listStation()
         {
             InitializeComponent();
             stations = (List<Station_Item>) PhoneApplicationService.Current.State["stations"];
             stationsDispo = new List<Station_Item>();	//nouvelle liste
+            
             //vérif stations disponible
             foreach (var query in stations)
             {
@@ -65,9 +97,48 @@ namespace VéloBleu
 
                     stationsDispo.Add(query);
                 }
-                listBox.ItemsSource = stationsDispo;
-                
+                listBox.ItemsSource = stationsDispo;             
             }
+        }
+        private string GetStatusString(PositionStatus status)
+        {
+            var strStatus = "";
+
+            switch (status)
+            {
+                case PositionStatus.Ready:
+                    strStatus = "Location is available.";
+                    break;
+
+                case PositionStatus.Initializing:
+                    strStatus = "Geolocation service is initializing.";
+                    break;
+
+                case PositionStatus.NoData:
+                    strStatus = "Location service data is not available.";
+                    break;
+
+                case PositionStatus.Disabled:
+                    strStatus = "Location services are disabled. Use the " +
+                                "Settings charm to enable them.";
+                    break;
+
+                case PositionStatus.NotInitialized:
+                    strStatus = "Location status is not initialized because " +
+                                "the app has not yet requested location data.";
+                    break;
+
+                case PositionStatus.NotAvailable:
+                    strStatus = "Location services are not supported on your system.";
+                    break;
+
+                default:
+                    strStatus = "Unknown PositionStatus value.";
+                    break;
+            }
+
+            return (strStatus);
+
         }
 
         private void triVelo_Click(object sender, System.Windows.RoutedEventArgs e)

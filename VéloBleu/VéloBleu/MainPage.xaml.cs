@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using VéloBleu.Resources;
 using System.Xml.Linq;
 using System.Diagnostics;
+using Windows.Devices.Geolocation;
 
 namespace VéloBleu
 {
@@ -46,6 +47,7 @@ namespace VéloBleu
                 txtProgBar.Text = "affichage des données...";
                 //dictionnaire d'état de l'application
                 PhoneApplicationService.Current.State["stations"] = stations;
+
                 //changement de page
                 NavigationService.Navigate(new Uri("/listStation.xaml", UriKind.Relative));
             }else{

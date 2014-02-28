@@ -10,6 +10,13 @@ namespace VéloBleu
     {
         string id, disp, tc, ac, ap, ab, name, wcom, lng, lat = "";
         string colorVelo, colorPlace = "";
+        double distanceInMeter;
+
+        public double DistanceInMeter
+        {
+            get { return distanceInMeter; }
+            set { distanceInMeter = value; }
+        }
 
         public string ColorPlace
         {
