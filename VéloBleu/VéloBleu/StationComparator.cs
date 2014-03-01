@@ -44,13 +44,29 @@ namespace VéloBleu
             //tri distance
             if (this.type == CompareType.DISTANCE)
             {
-               
-                //float a = station1.distanceInMeters;
-                //float b = station2.distanceInMeters;
-                //Log.v("valeur a", "station1.distance = " + a);
-                //Log.v("valeur b", "station2.distance = " + b);
-                //if (a != b)
-                //    return (a < b ? -1 : 1);
+                char[] delimiterChars = { ' ' };
+
+                string distance1All = station1.DistanceInMeter;
+                string distance2All = station2.DistanceInMeter;
+                string[] words1 = distance1All.Split(delimiterChars);
+                string[] words2 = distance2All.Split(delimiterChars);
+                string distance1 = words1[0];
+                string distance2 = words2[0];
+                double a = Convert.ToDouble(distance1);
+                double b = Convert.ToDouble(distance2);
+                //test si km (si c'est le cas multiplié par mille)
+                if (words1[1] == "km")
+                {
+                    a = a * 1000;
+                }
+                if (words2[1] == "km")
+                {
+                    b = b * 1000;
+                }
+                
+
+                if (a != b)
+                    return (a < b ? -1 : 1);
             }
             return 0;
         }

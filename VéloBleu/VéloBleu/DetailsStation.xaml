@@ -1,0 +1,39 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="VéloBleu.DetailsStation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+        <!--TitlePanel contient le nom de l'application et le titre de la page-->
+		<StackPanel Grid.Row="0" Margin="12,17,0,28">
+			<Image Source="velo_bleu.png" Stretch="None"/>
+			<TextBlock x:Name="stationNum" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48" TextAlignment="Center"/>
+			<TextBlock x:Name="txtAdress" TextWrapping="Wrap" TextAlignment="Center" FontSize="29.333"/>
+			<StackPanel Orientation="Horizontal" Height="72" Margin="10,0" HorizontalAlignment="Center">
+				<RadioButton Content="Plan des stations" />
+				<RadioButton Content="Itinéraire" FontFamily="Portable User Interface" />
+			</StackPanel>
+		</StackPanel>
+
+        <!--ContentPanel - placez tout contenu supplémentaire ici-->
+		<Grid x:Name="ContentPanel" Margin="12,211,12,0" Grid.RowSpan="2"/>
+
+	</Grid>
+
+    <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
+
+</phone:PhoneApplicationPage>

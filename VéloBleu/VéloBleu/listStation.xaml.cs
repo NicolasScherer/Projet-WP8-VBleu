@@ -19,85 +19,87 @@ namespace VéloBleu
         private Geolocator geolocator = null;
 
 
-        public async void getLocation()
-        {
-            geolocator = new Geolocator();
-            geolocator.DesiredAccuracyInMeters = 25;
-            try
-            {
-                Geoposition geoposition = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(10));
-                GeoCoordinate pos = new GeoCoordinate(Convert.ToDouble(geoposition.Coordinate.Latitude), Convert.ToDouble(geoposition.Coordinate.Longitude));
-                foreach (var query in stations)
-                {
-                    GeoCoordinate posStation = new GeoCoordinate(Convert.ToDouble(query.Lat), Convert.ToDouble(query.Lng));
-                    double distanceInMeter;
-                    distanceInMeter = pos.GetDistanceTo(posStation);
-                    string distance = distanceInMeter.ToString();
-                    query.DistanceInMeter = distance;
-                }
+        //public async void getLocation()
+        //{
+        //    geolocator = new Geolocator();
+        //    geolocator.DesiredAccuracyInMeters = 25;
+        //    try
+        //    {
+        //        Geoposition geoposition = await geolocator.GetGeopositionAsync(TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(10));
+        //        GeoCoordinate pos = new GeoCoordinate(Convert.ToDouble(geoposition.Coordinate.Latitude), Convert.ToDouble(geoposition.Coordinate.Longitude));
+        //        foreach (var query in stations)
+        //        {
+        //            GeoCoordinate posStation = new GeoCoordinate(Convert.ToDouble(query.Lat), Convert.ToDouble(query.Lng));
+        //            double distanceInMeter;
+        //            distanceInMeter = pos.GetDistanceTo(posStation);
+        //            string distance = distanceInMeter.ToString();
+        //            query.DistanceInMeter = distance;
+        //        }
                 
-            }
-            catch (UnauthorizedAccessException)
-            {
-                MessageBox.Show("Le service de location est désactivé dans les paramètres du téléphone.");
-            }
-            catch (Exception ex)
-            {
-            }
-        }
+        //    }
+        //    catch (UnauthorizedAccessException)
+        //    {
+        //        MessageBox.Show("Le service de location est désactivé dans les paramètres du téléphone.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             geolocator = new Geolocator { DesiredAccuracy = PositionAccuracy.High, MovementThreshold = 20 };
-            geolocator.StatusChanged += geolocator_StatusChanged;
+           // geolocator.StatusChanged += geolocator_StatusChanged;
             geolocator.PositionChanged += geolocator_PositionChanged;
+           // listBox.SelectedItem = null;
             base.OnNavigatedTo(e);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             geolocator.PositionChanged -= geolocator_PositionChanged;
-            geolocator.StatusChanged -= geolocator_StatusChanged;
+            //geolocator.StatusChanged -= geolocator_StatusChanged;
             geolocator = null;
             base.OnNavigatedFrom(e);
         }
 
-        private void geolocator_StatusChanged(Geolocator sender, StatusChangedEventArgs args)
-        {
-            string status = "";
-            switch (args.Status)
-            {
-                case PositionStatus.Ready:
-                    status = "Location is available.";
-                    break;
+        //private void geolocator_StatusChanged(Geolocator sender, StatusChangedEventArgs args)
+        //{
+        //    string status = "";
+        //    switch (args.Status)
+        //    {
+        //        case PositionStatus.Ready:
+        //            status = "Location is available.";
+        //            break;
 
-                case PositionStatus.Initializing:
-                    status = "Geolocation service is initializing.";
-                    break;
+        //        case PositionStatus.Initializing:
+        //            status = "Geolocation service is initializing.";
+        //            break;
 
-                case PositionStatus.NoData:
-                    status = "Location service data is not available.";
-                    break;
+        //        case PositionStatus.NoData:
+        //            status = "Location service data is not available.";
+        //            break;
 
-                case PositionStatus.Disabled:
-                    status = "Location services are disabled. Use the " +
-                                "Settings charm to enable them.";
-                    break;
+        //        case PositionStatus.Disabled:
+        //            status = "Location services are disabled. Use the " +
+        //                        "Settings charm to enable them.";
+        //            break;
 
-                case PositionStatus.NotInitialized:
-                    status = "Location status is not initialized because " +
-                                "the app has not yet requested location data.";
-                    break;
+        //        case PositionStatus.NotInitialized:
+        //            status = "Location status is not initialized because " +
+        //                        "the app has not yet requested location data.";
+        //            break;
 
-                case PositionStatus.NotAvailable:
-                    status = "Location services are not supported on your system.";
-                    break;
+        //        case PositionStatus.NotAvailable:
+        //            status = "Location services are not supported on your system.";
+        //            break;
 
-                default:
-                    status = "Unknown PositionStatus value.";
-                    break;
-            }
-            Console.WriteLine("status GPS : "+ status);
-        }
+        //        default:
+        //            status = "Unknown PositionStatus value.";
+        //            break;
+        //    }
+        //    //pour debug
+        //   // Console.WriteLine("status GPS : "+ status);
+        //}
 
         private void geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
@@ -112,11 +114,9 @@ namespace VéloBleu
                     double lng = Convert.ToDouble(query.Lng);
 
                     GeoCoordinate posStation = new GeoCoordinate(lat, lng);
-                   // GeoCoordinate posStation = new GeoCoordinate(43.693508, 7.280059);
                     double distanceInMeter;
                     distanceInMeter = pos.GetDistanceTo(posStation);
-                    string distance = distanceInMeter.ToString("f2");
-                   // this.lblDistance.Text = String.Format("{0} m = {1} km", distance.ToString("f2"), (distance / 1000).ToString("f3"));
+                    string distance = distanceInMeter.ToString("f0");
                     query.DistanceInMeter = distance;
 
                     //distance color
@@ -132,14 +132,20 @@ namespace VéloBleu
                     {
                         query.ColorDistance = "Red";
                     }
-                    //distance text
-                    if (query.DistanceInMeter == "0")
+                    //distance text km/m
+                    if (distanceInMeter == 0)
                     {
                         query.DistanceInMeter = "gps failed";
                     }
+                    else if (distanceInMeter > 1000)
+                    {
+                        double distanceInKilometers = (Math.Round(distanceInMeter));
+                        distanceInKilometers = distanceInKilometers / 1000;
+                        query.DistanceInMeter = distanceInKilometers.ToString("f1") + " km";
+                    }
                     else
                     {
-                        query.DistanceInMeter += " mètres";
+                        query.DistanceInMeter += " m";
                     }
                 }
                
@@ -154,8 +160,6 @@ namespace VéloBleu
             InitializeComponent();
             stations = (List<Station_Item>) PhoneApplicationService.Current.State["stations"];
             stationsDispo = new List<Station_Item>();	//nouvelle liste
-
-            //this.getLocation();
             
             //vérif stations disponible
             foreach (var query in stations)
@@ -238,6 +242,32 @@ namespace VéloBleu
             listBox.ItemsSource = null;
             listBox.ItemsSource = stationsDispo;
             //il aurait été préférable d'utiliser un ObservableCollection et d'implémenter INotifyPropertyChanged
+        }
+
+
+        //retour sur la page de chargement impossible (donc quitter app ou annuler)
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Souhaitez-vous vraiment quitter l'application 'Vélo Bleu' ?", "Fermeture de l'application", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                Application.Current.Terminate();
+            }
+            
+        }
+
+        //station sélectionné
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Region region = (Region)lbRegions.SelectedItem;
+            Station_Item oneStationDetails = (Station_Item)listBox.SelectedItem;
+            //dictionnaire d'état de l'application
+            PhoneApplicationService.Current.State["oneStationDetails"] = oneStationDetails;
+            //changement de page
+            NavigationService.Navigate(new Uri("/DetailsStation.xaml", UriKind.Relative));
         }
 
     }

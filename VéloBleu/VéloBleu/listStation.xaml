@@ -34,11 +34,11 @@
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Margin="12,211,12,0" Grid.RowSpan="2">
 
-            <ListBox Width="Auto" Height="Auto" x:Name="listBox" FontFamily="Portable User Interface" >
+            <ListBox Width="Auto" Height="Auto" x:Name="listBox" FontFamily="Portable User Interface" SelectionChanged="listBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Center">
-                            <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Left">
+                            <StackPanel Width="350">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Name}" FontFamily="Portable User Interface" FontSize="25" />
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Wcom}" FontSize="21" />
                             </StackPanel>

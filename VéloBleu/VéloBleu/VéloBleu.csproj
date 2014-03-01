@@ -94,6 +94,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DetailsStation.xaml.cs">
+      <DependentUpon>DetailsStation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="listStation.xaml.cs">
       <DependentUpon>listStation.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="DetailsStation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="listStation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
