@@ -36,15 +36,16 @@
 
             <ListBox Width="Auto" Height="Auto" x:Name="listBox" FontFamily="Portable User Interface" >
                 <ListBox.ItemTemplate>
-                    <DataTemplate>  
-                        <StackPanel Orientation="Horizontal" Margin="0,5">
-                            <StackPanel Width="350">
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Center">
+                            <StackPanel>
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Name}" FontFamily="Portable User Interface" FontSize="25" />
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Wcom}" FontSize="21" />
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Foreground="{Binding ColorVelo}" TextWrapping="Wrap" Text="{Binding Ab}" FontSize="20"/>
                                 <TextBlock Foreground="{Binding ColorPlace}" TextWrapping="Wrap" Text="{Binding Ap}" FontSize="20"/>
+                                <TextBlock Foreground="{Binding ColorDistance}" TextWrapping="Wrap" Text="{Binding DistanceInMeter}" FontSize="20"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

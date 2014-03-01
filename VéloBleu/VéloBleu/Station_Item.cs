@@ -9,14 +9,23 @@ namespace VéloBleu
     class Station_Item
     {
         string id, disp, tc, ac, ap, ab, name, wcom, lng, lat = "";
-        string colorVelo, colorPlace = "";
-        double distanceInMeter;
+        string colorVelo, colorPlace, colorDistance = "";
+        string distanceInMeter = "0";
 
-        public double DistanceInMeter
+        public string DistanceInMeter
         {
             get { return distanceInMeter; }
             set { distanceInMeter = value; }
         }
+
+        public string ColorDistance
+        {
+            get { return colorDistance; }
+            set { colorDistance = value; }
+        }
+        
+
+
 
         public string ColorPlace
         {
