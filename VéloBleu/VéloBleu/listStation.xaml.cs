@@ -17,7 +17,7 @@ namespace VéloBleu
         List<Station_Item> stations;
         List<Station_Item> stationsDispo;
         private Geolocator geolocator = null;
-
+        private GeoCoordinate pos; //position de l'utilisateur
 
         //public async void getLocation()
         //{
@@ -105,7 +105,7 @@ namespace VéloBleu
         {
             Dispatcher.BeginInvoke(() =>
             {
-                GeoCoordinate pos = new GeoCoordinate(Convert.ToDouble(args.Position.Coordinate.Latitude), Convert.ToDouble(args.Position.Coordinate.Longitude));
+                pos = new GeoCoordinate(Convert.ToDouble(args.Position.Coordinate.Latitude), Convert.ToDouble(args.Position.Coordinate.Longitude));
                 foreach (var query in stationsDispo)
                 {
                     query.Lat = query.Lat.Replace('.', ',');
@@ -264,10 +264,10 @@ namespace VéloBleu
             //gere le bouton arrière lorqu'aucun item n'est réellement sélectionné
             if (listBox.SelectedIndex != -1)
             {
-                //Region region = (Region)lbRegions.SelectedItem;
                 Station_Item oneStationDetails = (Station_Item)listBox.SelectedItem;
                 //dictionnaire d'état de l'application
                 PhoneApplicationService.Current.State["oneStationDetails"] = oneStationDetails;
+                PhoneApplicationService.Current.State["positionUser"] = pos;
                 //changement de page
                 NavigationService.Navigate(new Uri("/DetailsStation.xaml", UriKind.Relative));
             }

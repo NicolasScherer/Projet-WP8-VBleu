@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:maps="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
+    xmlns:toolkitcarte="clr-namespace:Microsoft.Phone.Maps.Toolkit;assembly=Microsoft.Phone.Controls.Toolkit"
     x:Class="VéloBleu.DetailsStation"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -15,8 +16,8 @@
     shell:SystemTray.IsVisible="True">
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="274"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contient le nom de l'application et le titre de la page-->
@@ -24,15 +25,17 @@
             <Image Source="velo_bleu.png" Stretch="None"/>
             <TextBlock x:Name="stationNum" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48" TextAlignment="Center"/>
             <TextBlock x:Name="txtAdress" TextWrapping="Wrap" TextAlignment="Center" FontSize="29.333"/>
+            <Button x:Name="btRoute" Content="Itinéraire" Click="btRoute_Click" HorizontalAlignment="Center"/>
             <StackPanel Orientation="Horizontal" Height="72" Margin="10,0" HorizontalAlignment="Center">
-                <RadioButton Content="Plan des stations" />
-                <RadioButton Content="Itinéraire" FontFamily="Portable User Interface" />
+                <RadioButton x:Name="rBtPlan" Content="Plan" Checked="rBtPlan_Checked" />
+                <RadioButton x:Name="rBtSat" Content="Satellite" FontFamily="Portable User Interface" Checked="rBtSat_Checked" />
+                <RadioButton x:Name="rBtRel" Content="Relief" Checked="rBtRel_Checked"/>
             </StackPanel>
         </StackPanel>
 
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
-        <Grid x:Name="ContentPanel" Margin="12,211,12,0" Grid.RowSpan="2">
-            <maps:Map x:Name="Map" HorizontalAlignment="Left" VerticalAlignment="Top" Width="456" Height="495" Margin="0,52,0,0"/>
+        <Grid x:Name="ContentPanel" Margin="12,0" Grid.Row="1">
+            <maps:Map x:Name="Map" HorizontalAlignment="Left" VerticalAlignment="Top" Width="456" Height="402" Margin="0,0,0,-62"/>
         </Grid>
 
     </Grid>
