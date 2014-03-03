@@ -50,7 +50,7 @@ namespace VéloBleu
             geolocator = new Geolocator { DesiredAccuracy = PositionAccuracy.High, MovementThreshold = 20 };
            // geolocator.StatusChanged += geolocator_StatusChanged;
             geolocator.PositionChanged += geolocator_PositionChanged;
-           // listBox.SelectedItem = null;
+            listBox.SelectedIndex = -1;
             base.OnNavigatedTo(e);
         }
 
@@ -148,8 +148,6 @@ namespace VéloBleu
                         query.DistanceInMeter += " m";
                     }
                 }
-               
-
                 listBox.ItemsSource = null;
                 listBox.ItemsSource = stationsDispo;
             });
@@ -160,6 +158,7 @@ namespace VéloBleu
             InitializeComponent();
             stations = (List<Station_Item>) PhoneApplicationService.Current.State["stations"];
             stationsDispo = new List<Station_Item>();	//nouvelle liste
+
             
             //vérif stations disponible
             foreach (var query in stations)
@@ -262,12 +261,17 @@ namespace VéloBleu
         //station sélectionné
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //Region region = (Region)lbRegions.SelectedItem;
-            Station_Item oneStationDetails = (Station_Item)listBox.SelectedItem;
-            //dictionnaire d'état de l'application
-            PhoneApplicationService.Current.State["oneStationDetails"] = oneStationDetails;
-            //changement de page
-            NavigationService.Navigate(new Uri("/DetailsStation.xaml", UriKind.Relative));
+            //gere le bouton arrière lorqu'aucun item n'est réellement sélectionné
+            if (listBox.SelectedIndex != -1)
+            {
+                //Region region = (Region)lbRegions.SelectedItem;
+                Station_Item oneStationDetails = (Station_Item)listBox.SelectedItem;
+                //dictionnaire d'état de l'application
+                PhoneApplicationService.Current.State["oneStationDetails"] = oneStationDetails;
+                //changement de page
+                NavigationService.Navigate(new Uri("/DetailsStation.xaml", UriKind.Relative));
+            }
+            
         }
 
     }
